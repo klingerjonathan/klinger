@@ -4,6 +4,7 @@
 #include <thread>
 #include <csignal>
 #include <sys/wait.h>
+#include <unistd.h>
 
 using namespace std;
 
@@ -26,8 +27,12 @@ int main() {
         } 
     } else {
        while(true) {
-            if(system("./charout A") != 0){
-                cout << "Error!!! charout nicht vorhanden!!!" << endl;
+            int run = execl("./charout", "A", nullptr);
+            if(run == -1){
+                cout << "Aufruf charout A wurde mit dem Code " << errno << " beendet" << endl;
+            } else {
+                execl("./charout", "A", nullptr);
+                exit(1);
             }
         }  
     }
