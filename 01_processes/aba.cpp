@@ -8,34 +8,37 @@
 
 using namespace std;
 
-int main() {
-    int countB = 0;
-    auto pid{fork()};
-    if(pid == 0) {
-        while(true) {
-            cout << "B" << flush;
-            chrono::milliseconds sleeptime(500);
-            this_thread::sleep_for(sleeptime);
-            countB++;
+int main(){
+    auto pid1{fork()};
+    auto pid2{fork()};
 
-            if(countB == 6){
-                kill(pid, SIGKILL);
-                int status;
-                waitpid(pid, &status, 0);
-                exit(EXIT_SUCCESS);
-            }
-        } 
-    } else {
-       while(true) {
-            int run = execl("./charout", "A", nullptr);
-            if(run == -1){
-                cout << "Aufruf charout A wurde mit dem Code " << errno << " beendet" << endl;
-            } else {
-                execl("./charout", "A", nullptr);
+    if(pid1 == 0){
+        sleep(3);
+        int status;
+        waitpid(pid2, &status, 0);
+        kill(pid2, SIGTERM);
+        waitpid(pid1, &status, 0);
+        kill(pid1, SIGTERM);
+    } else{
+        if (pid2 == 0){
+            int run1 = execl("./charout", "B", nullptr);
+            if (run1 == -1){
+                cout << "Aufruf charout B wurde mit dem Code " << errno << " beendet" << endl;
+            } else{
+                cout << run1 << flush;
                 exit(1);
             }
-        }  
+        } else{
+            int run2 = execl("./charout", "A", nullptr);
+            if (run2 == -1){
+                cout << "Aufruf charout A wurde mit dem Code " << errno << " beendet" << endl;
+            } else{
+                cout << run2 << flush;
+                exit(1);
+            }
+        }
     }
-    //Die genauer Ausgabe haengt davon ab welcher Prozess 
+
+    //Die genauer Ausgabe haengt davon ab welcher Prozess
     //vom System zuerst gestartet wird.
 }
