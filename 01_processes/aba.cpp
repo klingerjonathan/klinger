@@ -3,6 +3,7 @@
 #include <chrono>
 #include <thread>
 #include <csignal>
+#include <sys/wait.h>
 
 using namespace std;
 
@@ -18,7 +19,9 @@ int main() {
 
             if(countB == 6){
                 kill(pid, SIGKILL);
-                kill(getpid(), SIGTERM);
+                int status;
+                waitpid(pid, &status, 0);
+                exit(EXIT_SUCCESS);
             }
         } 
     } else {
@@ -26,6 +29,7 @@ int main() {
             cout << "A" << flush;
             chrono::milliseconds sleeptime(500);
             this_thread::sleep_for(sleeptime);
+        
         }  
     }
     //Die genauer Ausgabe haengt davon ab welcher Prozess 
