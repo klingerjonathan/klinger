@@ -9,36 +9,47 @@
 using namespace std;
 
 int main(){
-    auto pid1{fork()};
-    auto pid2{fork()};
+    int pid1 = fork();
+    int pid2 = fork();
+    int status;
 
-    if(pid1 == 0){
+    //Parent
+    if(pid1 > 0 && pid2 > 0){
+        cout << endl << "Sleeping for 3 seconds" << endl << flush;
         sleep(3);
-        int status;
-        waitpid(pid2, &status, 0);
-        kill(pid2, SIGTERM);
+
+        cout << "\nkilling both subprocesses with pids "  
+             << pid1 << " and " << pid2 << endl;  
+
+
+        kill(pid1, 9);
+        kill(pid2, 9);
+
+        cout << "wating for both subprocesses to be dead" << endl;
+        
         waitpid(pid1, &status, 0);
-        kill(pid1, SIGTERM);
-    } else{
-        if (pid2 == 0){
+        cout << "subprocess " << pid1 << " exited with " 
+             << WEXITSTATUS(status) << endl;  
+
+        waitpid(pid2, &status, 0);
+        cout << "subprocess " << getpid() << " exited with " 
+             << WEXITSTATUS(status) << endl;  
+    } 
+    else if(pid1 == 0 && pid2 > 0){
             int run1 = execl("./charout", "B", nullptr);
             if (run1 == -1){
-                cout << "Aufruf charout B wurde mit dem Code " << errno << " beendet" << endl;
+                cout << "starting charout failed: no such file or direcory" << flush;
             } else{
                 cout << run1 << flush;
-                exit(1);
             }
-        } else{
+    } 
+    else if(pid1 > 0 && pid2 == 0){
             int run2 = execl("./charout", "A", nullptr);
             if (run2 == -1){
-                cout << "Aufruf charout A wurde mit dem Code " << errno << " beendet" << endl;
+                cout << "starting charout failed: no such file or direcory" << flush;
             } else{
                 cout << run2 << flush;
-                exit(1);
             }
-        }
     }
-
-    //Die genauer Ausgabe haengt davon ab welcher Prozess
-    //vom System zuerst gestartet wird.
 }
+
