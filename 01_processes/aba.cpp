@@ -26,10 +26,9 @@ int main() {
         } 
     } else {
        while(true) {
-            cout << "A" << flush;
-            chrono::milliseconds sleeptime(500);
-            this_thread::sleep_for(sleeptime);
-        
+            if(system("./charout A") != 0){
+                cout << "Error!!! charout nicht vorhanden!!!" << endl;
+            }
         }  
     }
     //Die genauer Ausgabe haengt davon ab welcher Prozess 
