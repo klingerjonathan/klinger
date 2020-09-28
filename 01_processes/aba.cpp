@@ -16,4 +16,6 @@ int main() {
             sleep(1);
         }  
     }
+    //Die genauer Ausgabe haengt davon ab welcher Prozess 
+    //vom System zuerst gestartet wird.
 }
