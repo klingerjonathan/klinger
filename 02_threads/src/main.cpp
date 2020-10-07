@@ -4,10 +4,10 @@
 using namespace std;
 
 class Car {
-    string carName;
+    string carBrand;
 
-    Car(string name) {
-        carName = name;
+    void Car::operator()(string brand) {
+        carBrand = brand;
     }
 
     void race() {
