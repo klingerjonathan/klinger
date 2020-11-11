@@ -7,10 +7,12 @@ class Car {
     public:
         void operator()() {
             int round = 1;
+            string output;
 
             while(true){
                 this_thread::sleep_for(chrono::seconds(1));
-                cout << "Car: Runde " << round << flush << endl; 
+                output = "Car: Runde " + to_string(round); 
+                cout << output << endl << flush;
                 round++;
             }
         }
@@ -19,10 +21,12 @@ class Car {
 
 void mini_one() {
     int round = 1;
+    string output; 
 
     while(true){
         this_thread::sleep_for(chrono::seconds(1));
-        cout << "Mini One: Runde " << round << flush << endl; 
+        output = "Mini One: Runde " + to_string(round); 
+        cout << output << endl << flush;
         round++;
     }
 }
