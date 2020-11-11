@@ -11,8 +11,8 @@ class Car {
 
             while(true){
                 this_thread::sleep_for(chrono::seconds(1));
-                output = "Car: Runde " + to_string(round); 
-                cout << output << endl << flush;
+                output = "Car: Runde " + to_string(round) + "\n"; 
+                cout << output << flush;
                 round++;
             }
         }
@@ -25,8 +25,8 @@ void mini_one() {
 
     while(true){
         this_thread::sleep_for(chrono::seconds(1));
-        output = "Mini One: Runde " + to_string(round); 
-        cout << output << endl << flush;
+        output = "Mini One: Runde " + to_string(round) + "\n"; 
+        cout << output << flush;
         round++;
     }
 }
