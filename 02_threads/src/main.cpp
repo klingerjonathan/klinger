@@ -1,6 +1,7 @@
 #include <iostream>
 #include <thread>
 #include <random>
+#include <iomanip>
 
 using namespace std;
 
@@ -11,6 +12,7 @@ public:
     {
         int round = 1;
         string output;
+        ostringstream buf;
 
         while (true)
         {
@@ -18,7 +20,9 @@ public:
             std::mt19937 gen(rd());
             std::uniform_real_distribution<> dis{1, 10};
             this_thread::sleep_for(chrono::milliseconds(1000));
-            output = "Car: Runde " + to_string(round) + " Rundenzeit: " + to_string(dis(gen)) + "\n";
+            buf << "Car: Runde " << round << " Rundenzeit: " << setprecision(3) << dis(gen) << endl;
+            output = buf.str();
+            buf.str("");
             cout << output << flush;
             round++;
         }
@@ -29,6 +33,7 @@ void mini_one()
 {
     int round = 1;
     string output;
+    ostringstream buf;
 
     while (true)
     {
@@ -36,7 +41,9 @@ void mini_one()
         std::mt19937 gen(rd());
         std::uniform_real_distribution<> dis{1, 10};
         this_thread::sleep_for(chrono::milliseconds(1000));
-        output = "Mini One: Runde " + to_string(round) + " Rundenzeit: " + to_string(dis(gen)) + "\n";
+        buf << "Mini One: Runde " << round << " Rundenzeit: " << setprecision(3) << dis(gen) << endl;
+        output = buf.str();
+        buf.str("");
         cout << output << flush;
         round++;
     }
