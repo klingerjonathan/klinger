@@ -32,7 +32,7 @@ public:
         }
     }
 
-    int get_total_time()
+    float get_total_time()
     {
         return ges;
     }
@@ -65,17 +65,17 @@ int main()
     Car audi_a1;
     float n{};
 
-    thread t1{audi_a1};
+    thread t1{ref(audi_a1)};
     thread t2{mini_one, ref(n)};
 
     t1.join();
     t2.join();
 
-    if (n > audi_a1.get_total_time())
+    if (n < audi_a1.get_total_time())
     {
         cout << "Der Sieger ist Mini mit   : " << n << endl;
         cout << "Der Verlierer ist Audi mit: " << audi_a1.get_total_time() << endl;
-    } else if (n < audi_a1.get_total_time()) {
+    } else if (n > audi_a1.get_total_time()) {
         cout << "Der Sieger ist Audi mit      : " << audi_a1.get_total_time() << endl;
         cout << "Der Verlierer ist Mini mit   : " << n << endl;
     } else {
