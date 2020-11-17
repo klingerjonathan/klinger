@@ -10,13 +10,13 @@ class Car
 public:
     float ges = 0;
 
-    void operator()()
+    void operator()(int laps)
     {
         int round = 1;
         string output;
         ostringstream buf;
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < laps; i++)
         {
             std::random_device rd;
             std::mt19937 gen(rd());
@@ -38,13 +38,13 @@ public:
     }
 };
 
-void mini_one(float &n)
+void mini_one(float &n, int laps)
 {
     int round = 1;
     string output;
     ostringstream buf;
 
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < laps; i++)
     {
         std::random_device rd;
         std::mt19937 gen(rd());
@@ -60,13 +60,31 @@ void mini_one(float &n)
     }
 }
 
-int main()
+int main(int argc, char* argv[])
 {
+    int laps;
+    if (argc == 0) {
+        cout << "Keine Parameter!" << endl;
+        return 0;
+    }
+    try {
+        laps = stoi(argv[1]);
+    } 
+    catch(exception &err) {
+        cout << "Could not convert: " << argv[1] << endl;
+        return 0;
+    }
+
+    if (laps < 1 || laps > 16) {
+        cout << "Out of range (1 <= LAP'S < 16):  " << argv[1] << endl;
+        return 0;
+    } 
+    
     Car audi_a1;
     float n{};
 
-    thread t1{ref(audi_a1)};
-    thread t2{mini_one, ref(n)};
+    thread t1{ref(audi_a1), laps};
+    thread t2{mini_one, ref(n), laps};
 
     t1.join();
     t2.join();
