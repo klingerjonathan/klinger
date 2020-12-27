@@ -1,0 +1,9 @@
+class Account {
+    private: 
+        int balance; 
+
+    public: 
+        int get_balance();
+        bool deposit(int amount) ;
+        bool withdraw(int amount);
+}
