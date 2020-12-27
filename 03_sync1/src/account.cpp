@@ -5,7 +5,7 @@ date: 12.20
 desc: Exercise 03 NVS
 */
 
-#include "../include/account.h"
+#include "account.h"
 
 int Account::get_balance() {
     return balance; 
