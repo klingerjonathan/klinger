@@ -11,6 +11,8 @@ desc: Exercise 03 NVS
 using namespace std; 
 
 int main() {
-    cout << "Hello World!" << endl;
+    Account klinger;
+    klinger.deposit(1);
+    cout << "Kontostand: " << klinger.get_balance() << endl;
 }
 
