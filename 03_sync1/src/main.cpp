@@ -12,7 +12,12 @@ using namespace std;
 
 int main() {
     Account klinger;
-    klinger.deposit(1);
-    cout << "Kontostand: " << klinger.get_balance() << endl;
+    klinger.deposit(15);
+    klinger.withdraw(6);
+    //zu Viel abheben
+    bool erfolg = klinger.withdraw(10);
+
+    cout << "Status: " << erfolg << endl;
+    cout << "Balance: " << klinger.get_balance() << endl;
 }
 

@@ -7,7 +7,7 @@ desc: Exercise 03 NVS
 
 class Account {
     private: 
-        int balance = 1; 
+        int balance = 0; 
 
     public: 
         int get_balance();

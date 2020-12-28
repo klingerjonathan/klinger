@@ -19,8 +19,9 @@ bool Account::deposit(int amount) {
         
 bool Account::withdraw(int amount) {
     if (balance - amount < 0) {
-        return 0;
+        return false;
     } else {
-        return 1;
+        balance -= amount;
+        return true;
     }
 }
