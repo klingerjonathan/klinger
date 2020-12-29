@@ -1,0 +1,11 @@
+project('loadsim', 'cpp')
+
+thread_dep = dependency('threads')
+
+inc_dir = include_directories('include')
+
+src = ['src/loadsim']
+
+executable('loadsim', 
+            sources : src,
+            include_directories : inc_dir)
