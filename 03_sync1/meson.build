@@ -1,7 +1,13 @@
-project('03_sync1', 'cpp')
+project('03_sync1', 'cpp',
+         license : ['BSD 3-Clause'],
+         version : '0.1',
+         default_options : ['cpp_std=c++2a', 'warning_level=3', 'werror=true'])
+
+thread_dep = dependency('threads')
 
 inc_dir = include_directories('include')
 src = ['src/main.cpp', 'src/account.cpp']
+
 
 executable('account', 
             sources : src,
