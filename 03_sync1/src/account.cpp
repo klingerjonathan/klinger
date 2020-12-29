@@ -21,7 +21,7 @@ bool Account::deposit(int amount) {
     unique_lock<mutex> unique{m};
     int tmp{this->balance};
     this_thread::sleep_for(chrono::milliseconds{10});
-    this->balance = tmp + amount;
+    this->balance += amount;
     return 1;
 }
         
@@ -36,12 +36,13 @@ bool Account::withdraw(int amount) {
     }
 }
 
-Depositer::Depositer(Account* account) {
+Depositer::Depositer(Account* account, int init_deposits) {
     this->account = account;
+    this->start_deposits = init_deposits;
 }
 
 void Depositer::operator()() {
-    for(int i=0; i<5; i++) {
+    for(int i=0; i<this->start_deposits; i++) {
         this->account->deposit(1);
     }
 }

@@ -6,6 +6,7 @@ desc: Exercise 03 NVS
 */
 
 #include <mutex>
+#include "CLI11.hpp"
 
 class Account {
     private: 
@@ -21,8 +22,9 @@ class Account {
 class Depositer {
     private: 
         Account* account;
+        int start_deposits{0};
     
     public: 
-        Depositer(Account* account);
+        Depositer(Account* account, int init_deposits);
         void operator()();
 };
