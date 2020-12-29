@@ -17,3 +17,12 @@ class Account {
         bool deposit(int amount) ;
         bool withdraw(int amount);
 };
+
+class Depositer {
+    private: 
+        Account* account;
+    
+    public: 
+        Depositer(Account* account);
+        void operator()();
+};

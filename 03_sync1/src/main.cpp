@@ -25,6 +25,7 @@ int main() {
     cout << "Balance: " << klinger.get_balance() << endl;
     */ 
 
+    /*
     klinger.deposit(1);
 
     thread t1{[&]() {
@@ -38,6 +39,17 @@ int main() {
     t1.join();
     t2.join();
 
+    cout << "Balance: " << klinger.get_balance() << endl;
+    */
+
+    Depositer dep1(&klinger);
+    Depositer dep2(&klinger);
+
+    thread t1{&Depositer::operator(), ref(dep1)};
+    thread t2{&Depositer::operator(), ref(dep2)};
+
+    t1.join();
+    t2.join();
     cout << "Balance: " << klinger.get_balance() << endl;
 
     return 0;

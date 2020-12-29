@@ -31,3 +31,13 @@ bool Account::withdraw(int amount) {
         return true;
     }
 }
+
+Depositer::Depositer(Account* account) {
+    this->account = account;
+}
+
+void Depositer::operator()() {
+    for(int i=0; i<5; i++) {
+        this->account->deposit(1);
+    }
+}
