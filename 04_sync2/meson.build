@@ -4,7 +4,7 @@ thread_dep = dependency('threads')
 
 inc_dir = include_directories('include')
 
-src = ['src/loadsim']
+src = ['src/loadsim.cpp']
 
 executable('loadsim', 
             sources : src,
