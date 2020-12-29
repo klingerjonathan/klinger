@@ -7,6 +7,7 @@ desc: Exercise 03 NVS
 
 #include <thread>
 #include <mutex>
+#include <chrono>
 #include "account.h"
 
 using namespace std;
@@ -17,7 +18,10 @@ int Account::get_balance() {
 }
 
 bool Account::deposit(int amount) {
-    balance -= amount;
+    unique_lock<mutex> unique{m};
+    int tmp{this->balance};
+    this_thread::sleep_for(chrono::milliseconds{10});
+    this->balance = tmp + amount;
     return 1;
 }
         
