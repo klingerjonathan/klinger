@@ -20,9 +20,11 @@ class WorkQueue{
         queue<WorkPacket> work_queue;
         mutex m;
         std::condition_variable not_empty;
-        
+        std::condition_variable is_full;
+        size_t max_packets;
+
     public:
-        WorkQueue();
+        WorkQueue(size_t max) {max_packets = max;};
         void push(WorkPacket wp);
         WorkPacket pop();
 };
