@@ -37,7 +37,22 @@ void Philosopher::operator()(Semaphore* fork_counter) {
 
         println("Philosopher ", to_string(number), " attempts to get right fork");
 
-        right_fork.lock();
+        if (livelock){
+            while(!right_fork.try_lock_for(chrono::seconds(3))) {
+                this_thread::sleep_for(100ms);
+
+                if (fork_counter != nullptr) {
+                    fork_counter->release();
+                }
+
+                left_fork.unlock();
+                println("Philosopher", to_string(number), "released left fork due to timeout getting the right one!");
+            }
+            this_thread::sleep_for(3s);
+            continue;
+        } else {
+            right_fork.lock();
+        }
 
         println("Philosopher ", to_string(number), " got right fork. Now he is eating...");
 
@@ -46,10 +61,10 @@ void Philosopher::operator()(Semaphore* fork_counter) {
 
         println("Philosopher ", to_string(number), " finished eating");
 
-        left_fork.unlock();
         if(fork_counter != nullptr) {
             fork_counter->acquire();
         }
+        left_fork.unlock();
 
         println("Philosopher ", to_string(number), " released left fork");
         println("currently", to_string(fork_counter->available_permits()), "left forks available");
