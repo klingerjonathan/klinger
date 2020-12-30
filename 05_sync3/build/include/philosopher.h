@@ -10,7 +10,7 @@
 
 #include <thread>
 #include <mutex>
-#include <vector>
+#include <initializer_list>
 
 using namespace std;
 
@@ -20,6 +20,8 @@ private:
     mutex &left_fork;
     mutex &right_fork;
     mutex &stdout_mtx;
+
+    void println(const initializer_list<string>&args);
 
 public:
     Philosopher(int _number, 
@@ -32,7 +34,6 @@ public:
     }
 
     void operator()();
-    void println(const vector<string>&);
 };
 
 #endif // PHILOSOPHER_H
