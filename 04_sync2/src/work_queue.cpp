@@ -17,7 +17,7 @@ using namespace std;
 WorkQueue::WorkQueue(){ }
 
 void WorkQueue::push(WorkPacket wp){
-    unique_lock lck{m};
+    unique_lock<mutex> lck{m};
     this->work_queue.push(wp);
     not_empty.notify_one();
 }
