@@ -11,22 +11,10 @@
 #include <mutex>
 #include <initializer_list>
 #include "philosopher.h"
+#include "utils.h"
 
 using namespace std;
 
-recursive_mutex out_mtx;
-
-void println() {
-    lock_guard<recursive_mutex> lg{out_mtx};
-    cout << endl;
-}
-
-template<typename T, typename... Rest>
-void println(const T& word, const Rest&... rest) {
-    lock_guard<recursive_mutex> lg{out_mtx};
-    cout << word << ' ';
-    println(rest...);
-}
 
 void Philosopher::operator()(mutex &cout_mtx) {
     while (true){
@@ -38,6 +26,9 @@ void Philosopher::operator()(mutex &cout_mtx) {
         left_fork.lock();
 
         println("Philosopher ", to_string(number), " got left fork. Now he wants the right one...");
+
+        this_thread::sleep_for(5s);
+        
         println("Philosopher ", to_string(number), " attempts to get right fork");
 
         right_fork.lock();
