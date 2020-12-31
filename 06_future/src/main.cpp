@@ -5,12 +5,12 @@
  * desc: Exercise 06 - future
  */
 
-//#include "InfInt.h"
 #include <iostream>
 #include <vector>
+#include <future>
 #include "CLI11.hpp"
-#include "InfInt.h"
 #include "calc_factors.h"
+#include "InfInt.h"
 
 using namespace std;
 
@@ -37,15 +37,29 @@ int main(int argc, char *argv[]) {
     vector<InfInt> facts{};
 
 
-    for (int i=0; i<numbers.size(); i++) {
+    for (unsigned int i=0; i<numbers.size(); i++) {
         facts.push_back(numbers[i]);
     }
 
-    for (auto number : facts) {
-        cout << number << ": ";
-        for (auto elem : get_factors(number)) {
-            cout << elem.toString() << " ";
+    vector<future<vector<InfInt>>> futures;
+
+
+    for (auto elem : facts) {
+        futures.push_back(async(launch::async, get_factors, elem));
+    }
+
+
+    futures.at(facts.size() - 1).wait();
+
+    for (unsigned int i{}; i < facts.size(); i++){
+        cout << numbers[i] << ": ";
+        futures[i].wait();
+        for (auto primes : futures[i].get())
+        {
+            cout << primes.toString() << " ";
         }
         cout << endl;
     }
+
+
 }
