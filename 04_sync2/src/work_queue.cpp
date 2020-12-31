@@ -14,7 +14,6 @@ desc: Exercise 04
 
 using namespace std;
 
-
 void WorkQueue::push(WorkPacket wp) {
   unique_lock<mutex> lck{m};
   is_full.wait(lck, [this]() { return work_queue.size() < max_packets; });
