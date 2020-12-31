@@ -24,6 +24,20 @@ string validate(const string& numbers) {
     }  
 }
 
+void factoring(vector<InfInt>& numbers, vector<future<vector<InfInt>>>& futures) {
+    futures.at(numbers.size() - 1).wait();
+
+    for (unsigned int i{}; i < numbers.size(); i++){
+        cout << numbers[i] << ": ";
+        futures[i].wait();
+        for (auto primes : futures[i].get())
+        {
+            cout << primes.toString() << " ";
+        }
+        cout << endl;
+    }
+               }
+
 int main(int argc, char *argv[]) {
     CLI::App app("Factor numbers");
 
@@ -48,18 +62,9 @@ int main(int argc, char *argv[]) {
         futures.push_back(async(launch::async, get_factors, elem));
     }
 
-
-    futures.at(facts.size() - 1).wait();
-
-    for (unsigned int i{}; i < facts.size(); i++){
-        cout << numbers[i] << ": ";
-        futures[i].wait();
-        for (auto primes : futures[i].get())
-        {
-            cout << primes.toString() << " ";
-        }
-        cout << endl;
-    }
+    thread t1{factoring, ref(facts), ref(futures)};
+    t1.join();
+    
 
     return 0;
 
