@@ -45,3 +45,14 @@ void Clock::operator()() {
         this->curr_time += chrono::seconds(1);
     }
 }
+
+long Clock::to_time()
+{
+    return std::chrono::system_clock::to_time_t(curr_time);
+}
+
+void Clock::from_time(long new_time)
+{
+    std::cout << name + " time update: " + std::to_string(new_time) + "\n"
+              << std::flush;
+}

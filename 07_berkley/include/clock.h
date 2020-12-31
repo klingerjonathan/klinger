@@ -24,4 +24,7 @@ class Clock {
         tuple<int, int, int> get_time();
 
         void operator()();
+
+        long to_time();
+        void from_time(long new_time);
 };

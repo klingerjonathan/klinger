@@ -11,18 +11,30 @@
 #include "channel.h"
 
 void TimeMaster::operator()() {
-    for (int i=1; i<4; i++){
-        channel1->get_pipe1() << i;
-    }
+
+    while (true) {
+        cout << "Berkeley sync started: " + std::to_string(clock.to_time()) + "\n" << std::flush;
+
+        long slave1_time;
+        long slave2_time;
+        long self_time;
+
+        channel1->get_pipe1() << -1;
+        channel2->get_pipe1() << -1;
+
+        self_time = clock.to_time();
+        channel1->get_pipe2() >> slave1_time;
+        channel2->get_pipe2() >> slave2_time;
+
+        long new_time{(self_time + slave1_time + slave2_time) / 3};
     
-    for (int i=5; i<8; i++){
-        channel2->get_pipe1() << i;
+        clock.from_time(new_time);
+        channel1->get_pipe1() << new_time;
+        channel2->get_pipe1() << new_time;
+
+        this_thread::sleep_for(3s);
+
     }
-
-    this_thread::sleep_for(5s);
-
-    channel1->get_pipe1().close();
-    channel2->get_pipe2().close();
 
 
 }

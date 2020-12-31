@@ -18,14 +18,19 @@ using namespace std;
 
 void TimeSlave::operator()() {
     //clock();
-    long value1; 
-    long value2;
-    
-    while (channel.get_pipe1() >> value1) {
-        cout << name << ": " << value1 << endl; 
-    }
+    long new_time;
 
-    while (channel.get_pipe2() >> value2) {
-        cout << name << ": " << value2 << endl; 
+    while (true) {
+        while (channel.get_pipe1() >> new_time)
+    {
+        if (new_time > 0) {
+            clock.from_time(new_time);
+        } else {
+            std::cout << name + " time request: " + to_string(clock.to_time()) + "\n" << std::flush;
+            channel.get_pipe2() << clock.to_time();
+        }
+    }
+        
+    
     }
 }
