@@ -24,7 +24,7 @@ string validate(const string& numbers) {
     }  
 }
 
-void factoring(vector<InfInt>& numbers, vector<future<vector<InfInt>>>& futures) {
+void factoring(vector<InfInt>& numbers, vector<shared_future<vector<InfInt>>>& futures) {
     futures.at(numbers.size() - 1).wait();
 
     for (unsigned int i{}; i < numbers.size(); i++){
@@ -37,6 +37,19 @@ void factoring(vector<InfInt>& numbers, vector<future<vector<InfInt>>>& futures)
         cout << endl;
     }
                }
+
+void checkFacts(vector<InfInt>& numbers, vector<shared_future<vector<InfInt>>>& futures) {
+    for (unsigned int i=0; i<futures.size(); i++) {
+        futures[i].wait();
+        InfInt res = 1;
+        for (auto elem : futures[i].get()) {
+            res *= elem;
+        }
+        if (res != numbers[i]) {
+            cerr << "Factoring FAILED for: " << numbers.at(i) << endl;
+        }
+    }
+}
 
 int main(int argc, char *argv[]) {
     CLI::App app("Factor numbers");
@@ -55,7 +68,7 @@ int main(int argc, char *argv[]) {
         facts.push_back(numbers[i]);
     }
 
-    vector<future<vector<InfInt>>> futures;
+    vector<shared_future<vector<InfInt>>> futures;
 
 
     for (auto elem : facts) {
@@ -63,7 +76,9 @@ int main(int argc, char *argv[]) {
     }
 
     thread t1{factoring, ref(facts), ref(futures)};
+    thread t2{checkFacts, ref(facts), ref(futures)};
     t1.join();
+    t2.join();
     
 
     return 0;
