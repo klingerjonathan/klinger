@@ -9,8 +9,7 @@
 
 #include "pipe.h"
 
-class Channel
-{
+class Channel {
 private:
   Pipe<long> pipe1;
   Pipe<long> pipe2;
@@ -18,15 +17,7 @@ private:
 public:
   Channel() {}
 
-  Pipe<long> &get_pipe1()
-  {
-    return pipe1;
-  }
+  Pipe<long> &get_pipe1() { return pipe1; }
 
-  Pipe<long> &get_pipe2()
-  {
-    return pipe2;
-  }
-
-
+  Pipe<long> &get_pipe2() { return pipe2; }
 };

@@ -11,8 +11,8 @@
 
 using namespace std;
 
-#include "clock.h"
 #include "channel.h"
+#include "clock.h"
 
 class TimeSlave {
 private:
@@ -21,13 +21,12 @@ private:
   Channel channel;
 
 public:
-  TimeSlave(std::string name, int hours, int minutes, int seconds) : clock(name + "_name", hours, minutes, seconds) {
-      this->name = name;
+  TimeSlave(std::string name, int hours, int minutes, int seconds)
+      : clock(name + "_name", hours, minutes, seconds) {
+    this->name = name;
   };
 
-  Channel* get_channel() {
-      return &channel;
-  }
-  
+  Channel *get_channel() { return &channel; }
+
   void operator()();
 };
