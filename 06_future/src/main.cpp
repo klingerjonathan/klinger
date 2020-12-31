@@ -60,6 +60,9 @@ int main(int argc, char *argv[]) {
         ->required()
         ->check(validate);
 
+    bool sync = false; 
+    app.add_flag("-a, --async", sync, "async");
+
     CLI11_PARSE(app, argc, argv);
 
     vector<InfInt> facts{};
@@ -71,10 +74,17 @@ int main(int argc, char *argv[]) {
 
     vector<shared_future<vector<InfInt>>> futures;
 
-
-    for (auto elem : facts) {
-        futures.push_back(async(launch::async, get_factors, elem));
+    if (sync) {
+        for (auto elem : facts) {
+            futures.push_back(async(launch::async, get_factors, elem));
+        }
+    } else {
+        for (auto elem : facts) {
+            futures.push_back(async(get_factors, elem));
+        }
     }
+    
+    
 
     auto start = chrono::system_clock::now();
 
