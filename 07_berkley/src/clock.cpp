@@ -22,7 +22,16 @@ Clock::Clock(string name) {
 
 Clock::Clock(string name_, int hours, int minutes, int seconds) {
     name = name_;
-    curr_time = set_time(curr_time, hours, minutes, seconds);
+    set_time(hours, minutes, seconds);
+}
+
+void Clock::set_time(int hours, int minutes, int seconds) {
+    curr_time = ::set_time(ref(curr_time), hours, minutes, seconds);
+}
+
+tuple<int, int, int> Clock::get_time()
+{
+    return ::get_time(curr_time);
 }
 
 void Clock::operator()() {

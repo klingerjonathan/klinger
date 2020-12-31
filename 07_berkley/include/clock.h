@@ -12,12 +12,16 @@
 using namespace std;
 
 class Clock {
-    public:
+    private: 
         string name;
         chrono::time_point<chrono::system_clock> curr_time;
     
+    public:    
         Clock(string name);
         Clock(string name_, int hours, int minutes, int seconds);
+
+        void set_time(int hours, int minutes, int seconds);
+        tuple<int, int, int> get_time();
 
         void operator()();
 };
