@@ -8,7 +8,8 @@ thread_dep = dependency('threads')
 inc_dir = include_directories('include')
 src = ['src/main.cpp', 
        'src/clock.cpp',
-       'src/timeslave.cpp']
+       'src/timeslave.cpp',
+       'src/timemaster.cpp']
 
 executable('berkeley',
            sources : src,

@@ -6,24 +6,30 @@
 #include <condition_variable>
 
 template <typename T>
-class Pipe {
+class Pipe
+{
     std::queue<T> backend;
     std::mutex mtx;
     std::condition_variable not_empty;
     bool closed{false};
-  public:
-    Pipe& operator<<(T value) {
+
+public:
+    Pipe &operator<<(T value)
+    {
         std::lock_guard<std::mutex> lock(mtx);
         backend.push(value);
         not_empty.notify_one();
         return *this;
     }
-    
-    Pipe& operator>>(T& value) {
+
+    Pipe &operator>>(T &value)
+    {
         if (closed)
         {
             return *this;
-        } else {
+        }
+        else
+        {
             std::unique_lock<std::mutex> lock{mtx};
             not_empty.wait(lock, [this] { return backend.size() > 0; });
             value = backend.front();
@@ -33,15 +39,13 @@ class Pipe {
         return *this;
     }
 
-    void close() {
-        std::lock_guard<std::mutex> lock(mtx);
-
+    void close()
+    {
         closed = true;
     }
-    
-    explicit operator bool() {
-        std::lock_guard<std::mutex> lock(mtx);
 
+    explicit operator bool()
+    {
         return !closed;
     }
 };

@@ -13,6 +13,7 @@ using namespace std;
 
 #include "clock.h"
 #include "channel.h"
+#include "pipe.h"
 
 class TimeMaster {
 private:

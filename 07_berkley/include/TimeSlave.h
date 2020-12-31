@@ -18,7 +18,7 @@ class TimeSlave {
 private:
   Clock clock;
   string name;
-  Channel* channel;
+  Channel channel;
 
 public:
   TimeSlave(std::string name, int hours, int minutes, int seconds) : clock(name + "_name", hours, minutes, seconds) {
@@ -26,7 +26,7 @@ public:
   };
 
   Channel* get_channel() {
-      return channel;
+      return &channel;
   }
   
   void operator()();
