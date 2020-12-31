@@ -9,6 +9,7 @@
 #include <iostream>
 #include <vector>
 #include "CLI11.hpp"
+#include "InfInt.h"
 
 using namespace std;
 
@@ -32,8 +33,14 @@ int main(int argc, char *argv[]) {
 
     CLI11_PARSE(app, argc, argv);
 
+    vector<InfInt> futs{};
+
+
     for (int i=0; i<numbers.size(); i++) {
-        cout << numbers[i] << endl;
+        futs.push_back(numbers[i]);
     }
 
+    for (int i=0; i<futs.size(); i++) {
+        cout << futs[i] << endl;
+    }
 }
