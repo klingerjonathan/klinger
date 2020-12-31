@@ -17,7 +17,12 @@ using namespace std;
 
 Clock::Clock(string name) {
     this->name = name;
-    this->curr_time = chrono::system_clock::now();
+    this->curr_time = chrono::system_clock::now()
+}
+
+Clock::Clock(string name_, int hours, int minutes, int seconds) {
+    name = name_;
+    curr_time = set_time(curr_time, hours, minutes, seconds);
 }
 
 void Clock::operator()() {

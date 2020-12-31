@@ -17,6 +17,7 @@ class Clock {
         chrono::time_point<chrono::system_clock> curr_time;
     
         Clock(string name);
+        Clock(string name_, int hours, int minutes, int seconds);
 
         void operator()();
 };
