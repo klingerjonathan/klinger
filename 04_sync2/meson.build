@@ -10,6 +10,7 @@ cc = meson.get_compiler('cpp')
 
 executable('loadsim', 
             sources : src,
-            include_directories : inc_dir,)
+            include_directories : inc_dir,
+            dependencies : thread_dep)
 
 
