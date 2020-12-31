@@ -8,6 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <future>
+#include <chrono>
 #include "CLI11.hpp"
 #include "calc_factors.h"
 #include "InfInt.h"
@@ -75,10 +76,16 @@ int main(int argc, char *argv[]) {
         futures.push_back(async(launch::async, get_factors, elem));
     }
 
+    auto start = chrono::system_clock::now();
+
     thread t1{factoring, ref(facts), ref(futures)};
     thread t2{checkFacts, ref(facts), ref(futures)};
     t1.join();
     t2.join();
+
+    auto duration = chrono::duration_cast<chrono::milliseconds>
+    (std::chrono::system_clock::now() - start);
+    cout << "Time elapsed used for factoring: " << duration.count() << "ms" << endl;
     
 
     return 0;
