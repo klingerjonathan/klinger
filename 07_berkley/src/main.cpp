@@ -9,6 +9,7 @@
 #include <thread>
 #include "clock.h"
 #include "TimeSlave.h"
+#include "TimeMaster.h"
 
 using namespace std;
 
@@ -16,6 +17,7 @@ int main() {
 
     thread t1{Clock("testclock", 0, 0, 0)};
     
+    TimeMaster slave1{"Master1", 0, 0, 1};
 
     TimeSlave slave1{"Slave1", 0, 0, 1};
     TimeSlave slave2{"Slave2", 0, 0, 2};
