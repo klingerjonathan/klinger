@@ -11,4 +11,5 @@ src = ['src/main.cpp', 'src/account.cpp']
 
 executable('account', 
             sources : src,
-            include_directories : inc_dir)
+            include_directories : inc_dir,
+            dependencies : thread_dep)
