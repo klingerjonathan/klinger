@@ -1,5 +1,5 @@
 project('06_future', 'cpp',
-         default_options : ['cpp_std=c++17', 'warning_level=3', 
+         default_options : ['cpp_std=c++17', 'warning_level=0', 
                             'werror=true'])
 
 incdir = include_directories('include')

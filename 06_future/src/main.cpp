@@ -10,6 +10,7 @@
 #include <vector>
 #include "CLI11.hpp"
 #include "InfInt.h"
+#include "calc_factors.h"
 
 using namespace std;
 
@@ -33,14 +34,18 @@ int main(int argc, char *argv[]) {
 
     CLI11_PARSE(app, argc, argv);
 
-    vector<InfInt> futs{};
+    vector<InfInt> facts{};
 
 
     for (int i=0; i<numbers.size(); i++) {
-        futs.push_back(numbers[i]);
+        facts.push_back(numbers[i]);
     }
 
-    for (int i=0; i<futs.size(); i++) {
-        cout << futs[i] << endl;
+    for (auto number : facts) {
+        cout << number << ": ";
+        for (auto elem : get_factors(number)) {
+            cout << elem.toString() << " ";
+        }
+        cout << endl;
     }
 }
